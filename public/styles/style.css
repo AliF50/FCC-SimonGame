@@ -1,0 +1,33 @@
+#redSquare {
+    background: red;
+    width: 125px;
+    height: 125px;
+    opacity: 0.3;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#blueSquare {
+    background: blue;
+    width: 125px;
+    height: 125px;
+    opacity: 0.3;
+    margin-bottom: 5px;
+}
+
+#orangeSquare {
+    background: orange;
+    width: 125px;
+    height: 125px;
+    opacity: 0.3;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#greenSquare {
+    background: green;
+    width: 125px;
+    height: 125px;
+    opacity: 0.3;
+    margin-bottom: 5px;
+}
