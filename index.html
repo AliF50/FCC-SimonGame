@@ -14,8 +14,13 @@
 </head>
 
 <body>
-    <h1 class="text-center">Simon Game</h1>
     <div class="container">
+        <div class="row">
+            <div class="col-xs-3 col-xs-offset-4">
+                <h1>Simon Game</h1>
+            </div>
+        </div>
+        <hr>
         <div class="row">
             <div class="col-xs-2 col-xs-offset-4" id="redSquare">
             </div>
@@ -27,9 +32,13 @@
             </div>
             <div class="col-xs-2" id="greenSquare">
             </div>
+            <div class="col-xs-4">
+                <h3 id="messageCenter"></h3>
+            </div>
         </div>
         <div class="row">
-            <div class="col-xs-5 col-xs-offset-2">
+            <div class="col-xs-3 col-xs-offset-4">
+                <h3>When strict mode is enabled, if you make a mistake, it's game over. No second chances.</h3>
                 <h1 id="gameCount">Game Count: </h1>
                 <button type="button" class="btn btn-danger" id="restartGame">Restart</button>
                 <br />

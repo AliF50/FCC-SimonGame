@@ -50,7 +50,7 @@ $(document).ready(function() {
     $('#restartGame').click(function() {
         clearGame();
     });
-
+    //handle the checking of the checkbox for strict mode
     $('#strictCheckBox').change(function() {
         if (gameObject.strict === false) {
             gameObject.strict = true;
@@ -60,51 +60,51 @@ $(document).ready(function() {
         newGame();
     });
 
+    //click handler
     function handleClick(square) {
-        let clickedSquare = '#' + square;
+        let clickedSquare = '#' + square; //to make it id selector for jQuery
         sound(clickedSquare);
-        gameObject.player.push(clickedSquare);
-        console.log(gameObject.player);
-        checkIfCorrect(clickedSquare);
+        gameObject.player.push(clickedSquare); //push the clickedsquare into array
+        checkIfCorrect(clickedSquare); //check if the sequence is correct
     }
 
     function checkIfCorrect(square) {
-        if (gameObject.player.length === gameObject.currentGame.length) {
-            if (gameObject.player.toString() === gameObject.currentGame.toString()) {
-                sound(square);
-                alert('Good job! Next round!');
-                addCount();
-            } else {
-                if (gameObject.strict === true) {
-                    alert('Wrong! In strict mode, so you start over!');
-                    newGame();
+        if (gameObject.player.length === gameObject.currentGame.length) { //if lengths are the same
+            if (gameObject.player.toString() === gameObject.currentGame.toString()) { //if the two arrays are the same as a string
+                sound(square); //it's right
+                if (gameObject.count === 20) {
+                    $('#messageCenter').html('You won! Congratulations!');
+                    setTimeout(function() {
+                        $('#messageCenter').html('');
+                        newGame();
+                    }, 1000);
                 } else {
-                    alert('Wrong moves! Try again!');
-                    showSequence();
+                    $('#messageCenter').html('Good job! Next level!');
+                    setTimeout(function() {
+                        $('#messageCenter').html('');
+                        addCount();
+                    }, 1000);
+                }
+            } else { //it's wrong
+                if (gameObject.strict === true) { //start game over
+                    $('#messageCenter').html('Wrong! In strict mode, so you start over!');
+                    setTimeout(function() {
+                        $('#messageCenter').html('');
+                        newGame();
+                    }, 1000);
+                } else { //give many chances
+                    $('#messageCenter').html('Wrong moves! Try again!');
+                    setTimeout(function() {
+                        $('#messageCenter').html('');
+                        showSequence();
+                    }, 1000);
+
                 }
             }
         }
     }
 
-    function clearGame() {
-        gameObject.currentGame = [];
-        gameObject.count = 0;
-        addCount();
-    }
-
-    function newGame() {
-        clearGame();
-    }
-
-    function showIndividual(square) {
-        $(square).css('opacity', '1');
-        sound(square);
-        setTimeout(function() {
-            $(square).css('opacity', '0.3');
-        }, 350);
-    }
-
-    function sound(square) {
+    function sound(square) { //switch statement for handling sounds
         switch (square) {
             case '#redSquare':
                 gameObject.sound.red.play();
@@ -121,6 +121,18 @@ $(document).ready(function() {
         }
     }
 
+    function clearPlayer() {
+        gameObject.player = []; //empty the array
+    }
+
+    function showIndividual(square) { //function to showIndividual square getting highlighted
+        $(square).css('opacity', '1');
+        sound(square);
+        setTimeout(function() {
+            $(square).css('opacity', '0.3');
+        }, 350);
+    }
+
     function showSequence() {
         let i = 0;
 
@@ -130,25 +142,30 @@ $(document).ready(function() {
             if (i >= gameObject.currentGame.length) {
                 clearInterval(moves);
             }
-        }, 600);
+        }, 600); //show sequence making each one last 600 ms
         clearPlayer();
     }
 
-    function clearPlayer() {
-        gameObject.player = [];
-    }
-
-    function startSequence() {
+    function startSequence() { //add a random square to sequence
         gameObject.currentGame.push(gameObject.possibilities[(Math.floor(Math.random() * 4))]);
         //console.log(gameObject.currentGame);
         showSequence();
     }
 
-
-    function addCount() {
+    function addCount() { //iterartor and beginning of game
         gameObject.count++;
         $('#gameCount').html('Game Count: ' + gameObject.count);
         startSequence();
+    }
+
+    function clearGame() { //initialize game as if it's a clean slate
+        gameObject.currentGame = [];
+        gameObject.count = 0;
+        addCount();
+    }
+
+    function newGame() { //calls clearGame()
+        clearGame();
     }
 
     newGame();
